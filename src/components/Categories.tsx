@@ -45,14 +45,15 @@ export default function Categories({ categories, fetchCategories, fetchOccupatio
       console.error(error);
       alert('Failed to delete');
     } else {
-      fetchCategories();
-      fetchOccupations();
+      await fetchCategories();
+      await fetchOccupations();
     }
   };
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold mb-4">TimeTracker - Categories</h1>
+      <h1 className="text-3xl font-bold mb-4">Categories</h1>
+
       <div className="mb-4 p-4 border rounded">
         <h2 className="text-xl font-semibold mb-2">Add New Category</h2>
         <input

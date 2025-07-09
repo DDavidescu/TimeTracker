@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 
 type Category = {
@@ -20,18 +20,13 @@ type Occupation = {
 
 type Props = {
   categories: Category[];
-  fetchCategories: () => void;
   occupations: Occupation[];
   fetchOccupations: () => void;
 };
 
-export default function Occupations({ categories, occupations, fetchCategories, fetchOccupations }: Props) {
+export default function Occupations({ categories, occupations, fetchOccupations }: Props) {
   const [newOccupationName, setNewOccupationName] = useState('');
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
-
-  useEffect(() => {
-    fetchOccupations();
-  }, [fetchOccupations]);
 
   const handleAddOccupation = async () => {
     if (!newOccupationName.trim() || !selectedCategoryId) {
@@ -40,9 +35,7 @@ export default function Occupations({ categories, occupations, fetchCategories, 
     }
     const { error } = await supabase
       .from('occupations')
-      .insert([
-        { name: newOccupationName, category_id: selectedCategoryId }
-      ]);
+      .insert([{ name: newOccupationName, category_id: selectedCategoryId }]);
     if (error) {
       console.error(error);
       alert('Failed to add occupation');
@@ -50,7 +43,6 @@ export default function Occupations({ categories, occupations, fetchCategories, 
       setNewOccupationName('');
       setSelectedCategoryId('');
       fetchOccupations();
-      fetchCategories();  // ensure categories stay in sync in case needed
     }
   };
 
@@ -69,7 +61,8 @@ export default function Occupations({ categories, occupations, fetchCategories, 
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold mb-4">TimeTracker - Occupations</h1>
+      <h1 className="text-3xl font-bold mb-4">Occupations</h1>
+
       <div className="mb-4 p-4 border rounded">
         <h2 className="text-xl font-semibold mb-2">Add New Occupation</h2>
         <input
@@ -81,12 +74,14 @@ export default function Occupations({ categories, occupations, fetchCategories, 
         />
         <select
           value={selectedCategoryId}
-          onChange={(e) => setSelectedCategoryId(e.target.value)}
+          onChange={e => setSelectedCategoryId(e.target.value)}
           className="border rounded px-2 py-1 mb-2 w-full"
         >
           <option value="">Select Category</option>
           {categories.map(cat => (
-            <option key={cat.id} value={cat.id}>{cat.name}</option>
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
           ))}
         </select>
         <button

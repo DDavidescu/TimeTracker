@@ -1,0 +1,128 @@
+import { useState, useEffect } from 'react';
+
+type Category = {
+  id: string;
+  name: string;
+};
+
+type Occupation = {
+  id: string;
+  name: string;
+  category_id: string;
+};
+
+type Props = {
+  categories: Category[];
+  occupations: Occupation[];
+  onSubmit: (data: {
+    occupationId: string;
+    hours: number;
+    minutes: number;
+  }) => void;
+};
+
+export default function TimeEntryForm({ categories, occupations, onSubmit }: Props) {
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [filteredOccupations, setFilteredOccupations] = useState<Occupation[]>([]);
+  const [selectedOccupation, setSelectedOccupation] = useState('');
+  const [hours, setHours] = useState('');
+  const [minutes, setMinutes] = useState('');
+
+  useEffect(() => {
+    setFilteredOccupations(
+      occupations.filter(occ => occ.category_id === selectedCategory)
+    );
+    setSelectedOccupation('');
+  }, [selectedCategory, occupations]);
+
+  const handleSubmit = () => {
+    if (!selectedOccupation) {
+      alert('Please select an occupation');
+      return;
+    }
+
+    const hoursInt = parseInt(hours, 10) || 0;
+    const minutesInt = parseInt(minutes, 10) || 0;
+
+    if (hoursInt === 0 && minutesInt === 0) {
+      alert('Please enter at least Hours or Minutes');
+      return;
+    }
+
+    onSubmit({
+      occupationId: selectedOccupation,
+      hours: hoursInt,
+      minutes: minutesInt,
+    });
+
+    setSelectedCategory('');
+    setSelectedOccupation('');
+    setHours('');
+    setMinutes('');
+  };
+
+  const occupationDisabled = selectedCategory === '';
+  const timeInputsDisabled = selectedOccupation === '';
+  const addEntryDisabled = hours === '' && minutes === '';
+
+  return (
+    <div className="p-4 border rounded bg-white">
+      <h2 className="text-xl font-semibold mb-2">Log Time Entry</h2>
+
+      <select
+        value={selectedCategory}
+        onChange={e => setSelectedCategory(e.target.value)}
+        className="border rounded px-2 py-1 mb-2 w-full"
+      >
+        <option value="">Select Category</option>
+        {categories.map(cat => (
+          <option key={cat.id} value={cat.id}>
+            {cat.name}
+          </option>
+        ))}
+      </select>
+
+      <select
+        value={selectedOccupation}
+        onChange={e => setSelectedOccupation(e.target.value)}
+        className="border rounded px-2 py-1 mb-2 w-full disabled:bg-gray-300 disabled:text-gray-500"
+        disabled={occupationDisabled}
+      >
+        <option value="">Select Occupation</option>
+        {filteredOccupations.map(occ => (
+          <option key={occ.id} value={occ.id}>
+            {occ.name}
+          </option>
+        ))}
+      </select>
+
+      <div className="flex gap-2 mb-2">
+        <input
+          type="number"
+          placeholder="Hours"
+          value={hours}
+          onChange={e => setHours(e.target.value)}
+          disabled={timeInputsDisabled}
+          className="no-spinner border rounded px-2 py-1 w-1/2 disabled:bg-gray-300 disabled:text-gray-500"
+        />
+        <input
+          type="number"
+          placeholder="Minutes"
+          value={minutes}
+          onChange={e => setMinutes(e.target.value)}
+          disabled={timeInputsDisabled}
+          className="no-spinner border rounded px-2 py-1 w-1/2 disabled:bg-gray-300 disabled:text-gray-500"
+        />
+      </div>
+
+      <button
+        onClick={handleSubmit}
+        disabled={addEntryDisabled}
+        className="bg-green-500 text-white px-4 py-2 rounded disabled:bg-gray-300 disabled:text-gray-500"
+      >
+        Add Entry
+      </button>
+    </div>
+  );
+}
+
