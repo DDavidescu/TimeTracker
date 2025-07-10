@@ -16,6 +16,7 @@ type Props = {
   occupations: Occupation[];
   onSubmit: (data: {
     occupationId: string;
+    categoryId: string;
     hours: number;
     minutes: number;
   }) => void;
@@ -50,6 +51,7 @@ export default function TimeEntryForm({ categories, occupations, onSubmit }: Pro
     }
 
     onSubmit({
+      categoryId: selectedCategory,
       occupationId: selectedOccupation,
       hours: hoursInt,
       minutes: minutesInt,
