@@ -20,6 +20,7 @@ type Occupation = {
 
 type TimeLog = {
   id: string;
+  category_id: string;
   occupation_id: string;
   date: string;
   hours: number;
@@ -58,11 +59,11 @@ export default function Home() {
     if (data) setTodayLogs(data);
   };
 
-  const handleAddTimeLog = async ({ occupationId, hours, minutes }: { occupationId: string; hours: number; minutes: number }) => {
+  const handleAddTimeLog = async ({ categoryId, occupationId, hours, minutes }: { categoryId: string; occupationId: string; hours: number; minutes: number }) => {
     const today = new Date().toISOString().split('T')[0];
     const { error } = await supabase
       .from('time_logs')
-      .insert([{ occupation_id: occupationId, date: today, hours, minutes }]);
+      .insert([{ category_id: categoryId, occupation_id: occupationId, date: today, hours, minutes }]);
 
     if (error) {
       console.error(error);
@@ -80,6 +81,7 @@ export default function Home() {
       onEditClick = {() => navigate('/edit')}
       onSignOut = {() => supabase.auth.signOut()}
       onHistoryClick = {() => navigate('/history')}
+      onDetailedViewClick = {() => navigate('/detailed-view')}
       />
 
       <DailySummary totalMinutes={totalMinutes} />

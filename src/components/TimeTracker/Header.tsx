@@ -3,9 +3,10 @@ type Props = {
   onEditClick: () => void;
   onHistoryClick: () => void;
   onSignOut: () => void;
+  onDetailedViewClick: () => void; 
 };
 
-export default function Header({ onEditClick, onHistoryClick, onSignOut }: Props) {
+export default function Header({ onEditClick, onHistoryClick, onSignOut, onDetailedViewClick }: Props) {
   return (
     <div className="flex justify-between items-center mb-4">
       <h1 className="text-3xl font-bold">Time Tracker</h1>
@@ -16,18 +17,27 @@ export default function Header({ onEditClick, onHistoryClick, onSignOut }: Props
         >
           +
         </button>
+
         <button
           onClick={onHistoryClick}
           className="text-lg bg-purple-500 text-white px-4 py-2 rounded"
         >
           View History
         </button>
+
+        <button
+          onClick={onDetailedViewClick}
+          className="text-lg bg-green-500 text-white px-4 py-2 rounded">
+          Detailed View 
+        </button>
+
         <button
           onClick={onSignOut}
           className="text-lg bg-red-500 text-white px-4 py-2 rounded"
         >
           Sign Out
         </button>
+        
       </div>
     </div>
   );

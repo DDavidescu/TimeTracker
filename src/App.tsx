@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Home from './pages/Home';
 import Edit from './pages/Edit';
 import History from './pages/History';
+import DetailedView from './pages/DetailedView';
 
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/history" element={<History />} />
+          <Route path='/detailed-view' element={<DetailedView />}/>
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       </div>
