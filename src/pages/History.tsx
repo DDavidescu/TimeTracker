@@ -23,7 +23,7 @@ export type TimeLog = {
 export default function History() {
   const navigate = useNavigate();
   const [logs, setLogs] = useState<TimeLog[]>([]);
-  const [selectedFilter, setSelectedFilter] = useState<string>('');  // New
+  const [selectedFilter, setSelectedFilter] = useState<string>('');
 
   useEffect(() => {
     fetchLogs();
@@ -59,6 +59,16 @@ export default function History() {
     }
   };
 
+  /**
+   * Format date for Romanian display.
+   * Ensures no timezone shifts by parsing components manually.
+   * Stored date in DB is always ISO ("YYYY-MM-DD").
+   */
+  const formatDate = (dateStr: string) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('ro-RO');
+  };
+
   // Apply filtering
   const displayedLogs = selectedFilter ? filterLogs(logs, selectedFilter) : logs;
 
@@ -74,7 +84,7 @@ export default function History() {
         </button>
       </div>
 
-      {/* New Dropdown */}
+      {/* Filter Dropdown */}
       <div className="mb-4">
         <label className="mr-2 font-medium">Filter:</label>
         <select
@@ -104,7 +114,9 @@ export default function History() {
           >
             <div>
               <div className="font-bold">{log.occupations?.name || 'Unknown'}</div>
-              <div className="text-sm text-gray-700">Date: {log.date}</div>
+              <div className="text-sm text-gray-700">
+                Date: {formatDate(log.date)}
+              </div>
               <div className="text-sm text-gray-700">
                 {log.hours}h {log.minutes}m
               </div>
