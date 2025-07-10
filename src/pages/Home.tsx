@@ -5,12 +5,10 @@ import Header from '../components/TimeTracker/Header';
 import TimeEntryForm from '../components/TimeTracker/TimeEntryForm';
 import DailySummary from '../components/TimeTracker/DailySummary';
 
-
 type Category = {
   id: string;
   name: string;
 };
-
 
 type Occupation = {
   id: string;
@@ -50,8 +48,13 @@ export default function Home() {
     if (data) setOccupations(data);
   };
 
+  const getTodayISODate = () => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  };
+
   const fetchTodayLogs = async () => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = getTodayISODate();
     const { data } = await supabase
       .from('time_logs')
       .select('*')
@@ -59,11 +62,27 @@ export default function Home() {
     if (data) setTodayLogs(data);
   };
 
-  const handleAddTimeLog = async ({ categoryId, occupationId, hours, minutes }: { categoryId: string; occupationId: string; hours: number; minutes: number }) => {
-    const today = new Date().toISOString().split('T')[0];
+  const handleAddTimeLog = async ({
+    categoryId,
+    occupationId,
+    hours,
+    minutes
+  }: {
+    categoryId: string;
+    occupationId: string;
+    hours: number;
+    minutes: number;
+  }) => {
+    const today = getTodayISODate();
     const { error } = await supabase
       .from('time_logs')
-      .insert([{ category_id: categoryId, occupation_id: occupationId, date: today, hours, minutes }]);
+      .insert([{
+        category_id: categoryId,
+        occupation_id: occupationId,
+        date: today,
+        hours,
+        minutes
+      }]);
 
     if (error) {
       console.error(error);
@@ -77,11 +96,11 @@ export default function Home() {
 
   return (
     <div className="p-4">
-      <Header 
-      onEditClick = {() => navigate('/edit')}
-      onSignOut = {() => supabase.auth.signOut()}
-      onHistoryClick = {() => navigate('/history')}
-      onDetailedViewClick = {() => navigate('/detailed-view')}
+      <Header
+        onEditClick={() => navigate('/edit')}
+        onSignOut={() => supabase.auth.signOut()}
+        onHistoryClick={() => navigate('/history')}
+        onDetailedViewClick={() => navigate('/detailed-view')}
       />
 
       <DailySummary totalMinutes={totalMinutes} />
