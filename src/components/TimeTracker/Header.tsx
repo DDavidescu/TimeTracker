@@ -1,4 +1,3 @@
-
 type Props = {
   onEditClick: () => void;
   onHistoryClick: () => void;
@@ -6,40 +5,46 @@ type Props = {
   onDetailedViewClick: () => void; 
 };
 
-export default function Header({ onEditClick, onHistoryClick, onSignOut, onDetailedViewClick }: Props) {
+export default function Header({
+  onEditClick,
+  onHistoryClick,
+  onSignOut,
+  onDetailedViewClick
+}: Props) {
   return (
-    <div className="flex justify-between items-center mb-4">
-      <h1 className="text-3xl font-bold">Time Tracker</h1>
-      <div className="flex gap-2">
-        <button
-          onClick={onEditClick}
-          className="text-2xl bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          +
-        </button>
+    <header className="bg-white shadow-md">
+      <div className="max-w-3xl mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-gray-800">Time Tracker</h1>
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={onEditClick}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm"
+          >
+            Add Entry
+          </button>
 
-        <button
-          onClick={onHistoryClick}
-          className="text-lg bg-purple-500 text-white px-4 py-2 rounded"
-        >
-          View History
-        </button>
+          <button
+            onClick={onHistoryClick}
+            className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-md text-sm"
+          >
+            History
+          </button>
 
-        <button
-          onClick={onDetailedViewClick}
-          className="text-lg bg-green-500 text-white px-4 py-2 rounded">
-          Detailed View 
-        </button>
+          <button
+            onClick={onDetailedViewClick}
+            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-sm"
+          >
+            Detailed
+          </button>
 
-        <button
-          onClick={onSignOut}
-          className="text-lg bg-red-500 text-white px-4 py-2 rounded"
-        >
-          Sign Out
-        </button>
-        
+          <button
+            onClick={onSignOut}
+            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-md text-sm"
+          >
+            Sign Out
+          </button>
+        </div>
       </div>
-    </div>
+    </header>
   );
 }
-

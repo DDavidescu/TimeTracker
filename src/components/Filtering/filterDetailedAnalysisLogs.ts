@@ -25,7 +25,8 @@ export function filterDetailedAnalysisLogs(
   // 3. Category filtering
   if (filters.selectedCategoryIds.length > 0) {
     result = result.filter(log =>
-      filters.selectedCategoryIds.includes(log.occupations?.category_id)
+      log.occupations?.category_id !== undefined &&
+      filters.selectedCategoryIds.includes(log.occupations.category_id)
     );
   }
 
