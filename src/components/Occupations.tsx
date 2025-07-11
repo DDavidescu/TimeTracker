@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
+import DeleteButton from '../components/Shared/DeleteButton';
 
 type Category = {
   id: string;
@@ -42,19 +43,6 @@ export default function Occupations({ categories, occupations, fetchOccupations 
     } else {
       setNewOccupationName('');
       setSelectedCategoryId('');
-      fetchOccupations();
-    }
-  };
-
-  const handleDeleteOccupation = async (id: string) => {
-    const { error } = await supabase
-      .from('occupations')
-      .delete()
-      .eq('id', id);
-    if (error) {
-      console.error(error);
-      alert('Failed to delete');
-    } else {
       fetchOccupations();
     }
   };
@@ -104,12 +92,13 @@ export default function Occupations({ categories, occupations, fetchOccupations 
                 Category: {occ.categories?.name}
               </div>
             </div>
-            <button
-              onClick={() => handleDeleteOccupation(occ.id)}
-              className="ml-2 bg-red-500 text-white px-2 py-1 rounded"
-            >
-              Delete
-            </button>
+              <DeleteButton
+                id={occ.id}
+                table="occupations"
+                dependentTable="time_logs"
+                dependentColumn="occupation_id"
+                onDeleted={fetchOccupations}
+              />
           </li>
         ))}
       </ul>

@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { filterLogs } from '../components/Filtering/FilterHistoryLogs';
+import BackButton from '../components/Shared/BackButton';
+import DeleteButton from '../components/Shared/DeleteButton';
+
 
 export type TimeLog = {
   id: string;
@@ -45,25 +48,6 @@ export default function History() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    const { error } = await supabase
-      .from('time_logs')
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      console.error(error);
-      alert('Failed to delete');
-    } else {
-      fetchLogs();
-    }
-  };
-
-  /**
-   * Format date for Romanian display.
-   * Ensures no timezone shifts by parsing components manually.
-   * Stored date in DB is always ISO ("YYYY-MM-DD").
-   */
   const formatDate = (dateStr: string) => {
     const [year, month, day] = dateStr.split('-').map(Number);
     return new Date(year, month - 1, day).toLocaleDateString('ro-RO');
@@ -72,25 +56,30 @@ export default function History() {
   // Apply filtering
   const displayedLogs = selectedFilter ? filterLogs(logs, selectedFilter) : logs;
 
-  return (
-    <div className="p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold">Time Entry History</h1>
-        <button
-          onClick={() => navigate('/home')}
-          className="text-lg bg-gray-300 px-3 py-1 rounded"
-        >
-          Back
-        </button>
-      </div>
+return (
+<div className="min-h-screen bg-blue-50">
+{/* Header */}
+<header className="bg-white shadow-md">
+  <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+      Time Entry History
+    </h1>
+    <BackButton onClick={() => navigate('/home')}>
+      Back
+    </BackButton>
+  </div>
+</header>    
+<div className="max-w-3xl mx-auto p-4 space-y-6">
+      
 
-      {/* Filter Dropdown */}
-      <div className="mb-4">
-        <label className="mr-2 font-medium">Filter:</label>
+
+      {/* Filter */}
+      <div className="bg-white shadow rounded-xl p-4 flex items-center gap-4">
+        <label className="font-medium text-gray-700">Filter:</label>
         <select
           value={selectedFilter}
           onChange={(e) => setSelectedFilter(e.target.value)}
-          className="border px-2 py-1 rounded"
+          className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         >
           <option value="">All</option>
           <option value="Today">Today</option>
@@ -102,34 +91,41 @@ export default function History() {
         </select>
       </div>
 
+      {/* No entries message */}
       {displayedLogs.length === 0 && (
-        <p className="text-gray-600">No entries logged yet.</p>
+        <p className="text-center text-gray-500 italic">
+          No entries logged yet.
+        </p>
       )}
 
-      <ul className="space-y-2">
+      {/* Log list */}
+      <ul className="space-y-4">
         {displayedLogs.map(log => (
           <li
             key={log.id}
-            className="p-4 border rounded flex justify-between items-center"
+            className="bg-white shadow rounded-xl p-4 flex justify-between items-center"
           >
             <div>
-              <div className="font-bold">{log.occupations?.name || 'Unknown'}</div>
-              <div className="text-sm text-gray-700">
+              <div className="font-semibold text-lg text-gray-800">
+                {log.occupations?.name || 'Unknown'}
+              </div>
+              <div className="text-sm text-gray-600">
                 Date: {formatDate(log.date)}
               </div>
-              <div className="text-sm text-gray-700">
+              <div className="text-sm text-gray-600">
                 {log.hours}h {log.minutes}m
               </div>
             </div>
-            <button
-              onClick={() => handleDelete(log.id)}
-              className="ml-2 bg-red-500 text-white px-2 py-1 rounded"
-            >
-              Delete
-            </button>
+              <DeleteButton
+                id={log.id}
+                table="time_logs"
+                onDeleted={fetchLogs}
+              />
           </li>
         ))}
       </ul>
     </div>
-  );
+  </div>
+);
+
 }
