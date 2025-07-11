@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import Categories from '../components/Categories';
 import Occupations from '../components/Occupations';
+import BackButton from '../components/Shared/BackButton';
 
 type Category = {
   id: string;
@@ -43,29 +44,38 @@ export default function Edit() {
     else setOccupations(data || []);
   };
 
-  return (
-    <div className="p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold">Edit Time Tracker</h1>
-        <button
-          onClick={() => navigate('/home')}
-          className="text-lg bg-gray-300 px-3 py-1 rounded"
-        >
+return (
+  <div className="min-h-screen bg-blue-50">
+    {/* Header */}
+    <header className="bg-white shadow-md">
+      <div className="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+          Edit Time Tracker
+        </h1>
+        <BackButton onClick={() => navigate('/home')}>
           Back
-        </button>
+        </BackButton>
+      </div>
+    </header>
+
+    <main className="max-w-5xl mx-auto px-4 py-6 space-y-6">
+      <div className="bg-white rounded-xl shadow p-6 border border-blue-100">
+        <Categories
+          categories={categories}
+          fetchCategories={fetchCategories}
+          fetchOccupations={fetchOccupations}
+        />
       </div>
 
-      <Categories
-        categories={categories}
-        fetchCategories={fetchCategories}
-        fetchOccupations={fetchOccupations}
-      />
+      <div className="bg-white rounded-xl shadow p-6 border border-green-100">
+        <Occupations
+          categories={categories}
+          occupations={occupations}
+          fetchOccupations={fetchOccupations}
+        />
+      </div>
+    </main>
+  </div>
+);
 
-      <Occupations
-        categories={categories}
-        occupations={occupations}
-        fetchOccupations={fetchOccupations}
-      />
-    </div>
-  );
 }

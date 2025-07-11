@@ -35,96 +35,97 @@ export default function AnalysisFilters(props: Props) {
     }
   };
 
-  return (
-    <div className="p-4 border rounded mb-4 bg-white">
-      <h2 className="text-xl font-bold mb-4">Filters</h2>
+return (
+  <div className="p-6 space-y-6">
+    <h2 className="text-2xl font-bold text-gray-800">Filters</h2>
 
-      {/* Time Range */}
-      <div className="mb-4">
-        <label className="block font-medium mb-1">Time Range:</label>
-        <select
-          value={props.timeRange}
-          onChange={(e) => props.setTimeRange(e.target.value)}
-          className="border px-2 py-1 rounded w-full"
-        >
-          <option value="">All</option>
-          <option value="Today">Today</option>
-          <option value="Yesterday">Yesterday</option>
-          <option value="Last two days">Last two days</option>
-          <option value="Last week">Last week</option>
-          <option value="Last two weeks">Last two weeks</option>
-          <option value="Last two months">Last two months</option>
-        </select>
-      </div>
-
-      {/* Categories */}
-      <div className="mb-4">
-        <label className="block font-medium mb-1">Categories:</label>
-        {props.availableCategories.length === 0 ? (
-          <p className="text-gray-500 text-sm">No categories available.</p>
-        ) : (
-          <div className="flex flex-col space-y-1 max-h-40 overflow-y-auto border rounded p-2">
-            {props.availableCategories.map(cat => (
-              <label key={cat.id} className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={props.selectedCategoryIds.includes(cat.id)}
-                  onChange={() => toggleCategory(cat.id)}
-                  className="accent-blue-500"
-                />
-                <span>{cat.name}</span>
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Occupations */}
-      <div className="mb-4">
-        <label className="block font-medium mb-1">Occupations:</label>
-        {props.availableOccupations.length === 0 ? (
-          <p className="text-gray-500 text-sm">No occupations available.</p>
-        ) : (
-          <div className="flex flex-col space-y-1 max-h-40 overflow-y-auto border rounded p-2">
-            {props.availableOccupations.map(occ => (
-              <label key={occ.id} className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={props.selectedOccupationIds.includes(occ.id)}
-                  onChange={() => toggleOccupation(occ.id)}
-                  className="accent-green-500"
-                />
-                <span>{occ.name}</span>
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Grouping */}
-      <div className="mb-4">
-        <label className="block font-medium mb-1">Grouping:</label>
-        <select
-          value={props.grouping}
-          onChange={(e) => props.setGrouping(e.target.value as 'Category' | 'Occupation')}
-          className="border px-2 py-1 rounded w-full"
-        >
-          <option value="Category">By Category</option>
-          <option value="Occupation">By Occupation</option>
-        </select>
-      </div>
-
-      {/* Minimum Duration */}
-      <div className="mb-2">
-        <label className="block font-medium mb-1">Min Duration (mins):</label>
-        <input
-          type="number"
-          value={props.minimumDuration}
-          onChange={(e) => props.setMinimumDuration(Number(e.target.value))}
-          className="border px-2 py-1 rounded w-full"
-          min={0}
-        />
-      </div>
+    {/* Time Range */}
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-gray-700">Time Range</label>
+      <select
+        value={props.timeRange}
+        onChange={(e) => props.setTimeRange(e.target.value)}
+        className="w-full border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      >
+        <option value="">All</option>
+        <option value="Today">Today</option>
+        <option value="Yesterday">Yesterday</option>
+        <option value="Last two days">Last two days</option>
+        <option value="Last week">Last week</option>
+        <option value="Last two weeks">Last two weeks</option>
+        <option value="Last two months">Last two months</option>
+      </select>
     </div>
-  );
+
+    {/* Categories */}
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-gray-700">Categories</label>
+      {props.availableCategories.length === 0 ? (
+        <p className="text-gray-400 italic text-sm">No categories available.</p>
+      ) : (
+        <div className="border border-blue-100 bg-white rounded-md max-h-48 overflow-y-auto p-3 space-y-2">
+          {props.availableCategories.map(cat => (
+            <label key={cat.id} className="flex items-center space-x-2 text-gray-700">
+              <input
+                type="checkbox"
+                checked={props.selectedCategoryIds.includes(cat.id)}
+                onChange={() => toggleCategory(cat.id)}
+                className="accent-blue-600"
+              />
+              <span>{cat.name}</span>
+            </label>
+          ))}
+        </div>
+      )}
+    </div>
+
+    {/* Occupations */}
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-gray-700">Occupations</label>
+      {props.availableOccupations.length === 0 ? (
+        <p className="text-gray-400 italic text-sm">No occupations available.</p>
+      ) : (
+        <div className="border border-blue-100 bg-white rounded-md max-h-48 overflow-y-auto p-3 space-y-2">
+          {props.availableOccupations.map(occ => (
+            <label key={occ.id} className="flex items-center space-x-2 text-gray-700">
+              <input
+                type="checkbox"
+                checked={props.selectedOccupationIds.includes(occ.id)}
+                onChange={() => toggleOccupation(occ.id)}
+                className="accent-green-600"
+              />
+              <span>{occ.name}</span>
+            </label>
+          ))}
+        </div>
+      )}
+    </div>
+
+    {/* Grouping */}
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-gray-700">Grouping</label>
+      <select
+        value={props.grouping}
+        onChange={(e) => props.setGrouping(e.target.value as 'Category' | 'Occupation')}
+        className="w-full border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      >
+        <option value="Category">By Category</option>
+        <option value="Occupation">By Occupation</option>
+      </select>
+    </div>
+
+    {/* Minimum Duration */}
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-gray-700">Min Duration (mins)</label>
+      <input
+        type="number"
+        value={props.minimumDuration}
+        onChange={(e) => props.setMinimumDuration(Number(e.target.value))}
+        className="w-full border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        min={0}
+      />
+    </div>
+  </div>
+);
+
 }

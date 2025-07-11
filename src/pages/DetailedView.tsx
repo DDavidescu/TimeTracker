@@ -7,6 +7,7 @@ import AnalysisTotal from '../components/Filtering/AnalysisTotal';
 import PieChart from '../components/Charts/PieChart';
 import StackedBarChart from '../components/Charts/StackedBarChart';
 import AnalysisFilters from '../components/Filtering/AnalysisFilter';
+import BackButton from '../components/Shared/BackButton';
 
 export default function DetailedView() {
   const navigate = useNavigate();
@@ -88,54 +89,62 @@ export default function DetailedView() {
     setFilteredLogs(result);
   };
 
-  return (
-    <div className="p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold">Detailed Analysis</h1>
-        <button
-          onClick={() => navigate('/home')}
-          className="text-lg bg-gray-300 px-3 py-1 rounded"
-        >
-          Back to Home
-        </button>
+return (
+  <div className="min-h-screen bg-blue-50">
+    {/* Header */}
+    <header className="bg-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+          Detailed Analysis
+        </h1>
+        <BackButton onClick={() => navigate('/home')}>
+          Back
+        </BackButton>
       </div>
+    </header>
 
+    <main className="max-w-5xl mx-auto my-7 px-4 py-6 space-y-6">
       {loading ? (
-        <p>Loading...</p>
+        <div className="bg-white rounded-xl shadow p-6 text-center text-gray-600">
+          Loading...
+        </div>
       ) : (
         <>
-          <AnalysisFilters
-            timeRange={filters.timeRange}
-            setTimeRange={(val) => setFilters(prev => ({ ...prev, timeRange: val }))}
-            availableCategories={availableCategories}
-            selectedCategoryIds={filters.selectedCategoryIds}
-            setSelectedCategoryIds={(val) => setFilters(prev => ({ ...prev, selectedCategoryIds: val }))}
-            availableOccupations={availableOccupations}
-            selectedOccupationIds={filters.selectedOccupationIds}
-            setSelectedOccupationIds={(val) => setFilters(prev => ({ ...prev, selectedOccupationIds: val }))}
-            grouping={grouping}
-            setGrouping={setGrouping}
-            minimumDuration={filters.minimumDuration}
-            setMinimumDuration={(val) => setFilters(prev => ({ ...prev, minimumDuration: val }))}
-          />
-
-          <div className="space-y-4 mt-4">
-            <AnalysisTotal logs={filteredLogs} />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="border p-4 rounded">
-                <h2 className="text-xl font-bold mb-2">Pie Chart</h2>
-                <PieChart logs={filteredLogs} grouping={grouping} />
-              </div>
-              <div className="border p-4 rounded">
-                <h2 className="text-xl font-bold mb-2">Stacked Bar Chart</h2>
-                <StackedBarChart logs={filteredLogs} grouping={grouping} />
-              </div>
-            </div>
+          <div className="bg-white rounded-xl shadow p-6">
+            <AnalysisFilters
+              timeRange={filters.timeRange}
+              setTimeRange={(val) => setFilters(prev => ({ ...prev, timeRange: val }))}
+              availableCategories={availableCategories}
+              selectedCategoryIds={filters.selectedCategoryIds}
+              setSelectedCategoryIds={(val) => setFilters(prev => ({ ...prev, selectedCategoryIds: val }))}
+              availableOccupations={availableOccupations}
+              selectedOccupationIds={filters.selectedOccupationIds}
+              setSelectedOccupationIds={(val) => setFilters(prev => ({ ...prev, selectedOccupationIds: val }))}
+              grouping={grouping}
+              setGrouping={setGrouping}
+              minimumDuration={filters.minimumDuration}
+              setMinimumDuration={(val) => setFilters(prev => ({ ...prev, minimumDuration: val }))}
+            />
           </div>
 
+          <div className="bg-white rounded-xl shadow p-6">
+            <AnalysisTotal logs={filteredLogs} />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-xl shadow p-6">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">Pie Chart</h2>
+              <PieChart logs={filteredLogs} grouping={grouping} />
+            </div>
+            <div className="bg-white rounded-xl shadow p-6">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">Stacked Bar Chart</h2>
+              <StackedBarChart logs={filteredLogs} grouping={grouping} />
+            </div>
+          </div>
         </>
       )}
-    </div>
-  );
+    </main>
+  </div>
+);
+
 }

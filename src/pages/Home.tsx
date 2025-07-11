@@ -95,7 +95,7 @@ export default function Home() {
   const totalMinutes = todayLogs.reduce((sum, log) => sum + log.hours * 60 + log.minutes, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-blue-50 flex flex-col">
       <Header
         onEditClick={() => navigate('/edit')}
         onSignOut={() => supabase.auth.signOut()}
