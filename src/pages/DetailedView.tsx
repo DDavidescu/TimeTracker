@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import type { TimeLog } from './History';
 import { filterDetailedAnalysisLogs, type AnalysisFilters as AnalysisFiltersType } from '../components/Filtering/filterDetailedAnalysisLogs';
+import AnalysisTotal from '../components/Filtering/AnalysisTotal';
 import PieChart from '../components/Charts/PieChart';
 import StackedBarChart from '../components/Charts/StackedBarChart';
 import AnalysisFilters from '../components/Filtering/AnalysisFilter';
@@ -118,16 +119,21 @@ export default function DetailedView() {
             setMinimumDuration={(val) => setFilters(prev => ({ ...prev, minimumDuration: val }))}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div className="border p-4 rounded">
-              <h2 className="text-xl font-bold mb-2">Pie Chart</h2>
-              <PieChart logs={filteredLogs} grouping={grouping} />
-            </div>
-            <div className="border p-4 rounded">
-              <h2 className="text-xl font-bold mb-2">Stacked Bar Chart</h2>
-              <StackedBarChart logs={filteredLogs} grouping={grouping} />
+          <div className="space-y-4 mt-4">
+            <AnalysisTotal logs={filteredLogs} />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="border p-4 rounded">
+                <h2 className="text-xl font-bold mb-2">Pie Chart</h2>
+                <PieChart logs={filteredLogs} grouping={grouping} />
+              </div>
+              <div className="border p-4 rounded">
+                <h2 className="text-xl font-bold mb-2">Stacked Bar Chart</h2>
+                <StackedBarChart logs={filteredLogs} grouping={grouping} />
+              </div>
             </div>
           </div>
+
         </>
       )}
     </div>

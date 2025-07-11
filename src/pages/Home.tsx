@@ -95,7 +95,7 @@ export default function Home() {
   const totalMinutes = todayLogs.reduce((sum, log) => sum + log.hours * 60 + log.minutes, 0);
 
   return (
-    <div className="p-4">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header
         onEditClick={() => navigate('/edit')}
         onSignOut={() => supabase.auth.signOut()}
@@ -103,13 +103,19 @@ export default function Home() {
         onDetailedViewClick={() => navigate('/detailed-view')}
       />
 
-      <DailySummary totalMinutes={totalMinutes} />
+      <main className="flex-1 max-w-3xl w-full mx-auto p-4 space-y-6">
+        <div className="bg-white rounded-xl shadow p-6">
+          <DailySummary totalMinutes={totalMinutes} />
+        </div>
 
-      <TimeEntryForm
-        categories={categories}
-        occupations={occupations}
-        onSubmit={handleAddTimeLog}
-      />
+        <div className="bg-white rounded-xl shadow p-6">
+          <TimeEntryForm
+            categories={categories}
+            occupations={occupations}
+            onSubmit={handleAddTimeLog}
+          />
+        </div>
+      </main>
     </div>
   );
 }
