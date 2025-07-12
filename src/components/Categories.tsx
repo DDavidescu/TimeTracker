@@ -59,7 +59,7 @@ export default function Categories({ categories, fetchCategories, fetchOccupatio
 
   return (
     <div className="space-y-6">
-      <div className="border border-blue-100 rounded-xl p-6 shadow space-y-4">
+      <div className="p-6 space-y-4">
         <h2 className="text-xl font-bold text-gray-800">Add New Category</h2>
         <div className="space-y-4">
           {/* Category Name */}
@@ -69,7 +69,7 @@ export default function Categories({ categories, fetchCategories, fetchOccupatio
               type="text"
               value={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
-              className="w-full border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              className="w-full border border-blue-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               placeholder="Enter category name"
             />
           </div>
@@ -80,7 +80,7 @@ export default function Categories({ categories, fetchCategories, fetchOccupatio
             <select
               value={colorMode}
               onChange={(e) => setColorMode(e.target.value as 'suggested' | 'custom')}
-              className="w-full border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              className="w-full border border-blue-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
             >
               <option value="suggested">Suggested Color</option>
               <option value="custom">Pick Custom Color</option>
@@ -94,7 +94,7 @@ export default function Categories({ categories, fetchCategories, fetchOccupatio
               <select
                 value={selectedColor}
                 onChange={(e) => setSelectedColor(e.target.value)}
-                className="w-full border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                className="w-full border border-blue-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               >
                 {COLOR_OPTIONS.map(option => (
                   <option key={option.value} value={option.value}>
@@ -119,7 +119,7 @@ export default function Categories({ categories, fetchCategories, fetchOccupatio
           <button
             onClick={handleAddCategory}
             disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm md:text-base transition disabled:opacity-50"
+            className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white px-4 py-3 rounded-md text-sm md:text-base transition disabled:opacity-50"
           >
             {loading ? 'Adding...' : 'Add Category'}
           </button>

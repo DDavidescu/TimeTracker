@@ -68,13 +68,13 @@ export default function TimeEntryForm({ categories, occupations, onSubmit }: Pro
   const addEntryDisabled = hours === '' && minutes === '';
 
   return (
-    <div className="p-4 border rounded bg-white">
-      <h2 className="text-xl font-semibold mb-2">Log Time Entry</h2>
+    <div className="bg-white bg-gradient-to-r from-slate-100 to-blue-100 rounded-xl shadow-lg p-6 w-full border border-slate-500">
+      <h2 className="text-2xl font-semibold mb-4">Log Time Entry</h2>
 
       <select
         value={selectedCategory}
         onChange={e => setSelectedCategory(e.target.value)}
-        className="border rounded px-2 py-1 mb-2 w-full"
+        className="border rounded px-2 py-1 md:py-3 mb-3 md:mb-6 w-full"
       >
         <option value="">Select Category</option>
         {categories.map(cat => (
@@ -87,7 +87,7 @@ export default function TimeEntryForm({ categories, occupations, onSubmit }: Pro
       <select
         value={selectedOccupation}
         onChange={e => setSelectedOccupation(e.target.value)}
-        className="border rounded px-2 py-1 mb-2 w-full disabled:bg-gray-300 disabled:text-gray-500"
+        className="border rounded px-2 py-1 md:py-3 mb-3 md:mb-6 w-full disabled:bg-gray-300 disabled:text-gray-500"
         disabled={occupationDisabled}
       >
         <option value="">Select Occupation</option>
@@ -98,14 +98,14 @@ export default function TimeEntryForm({ categories, occupations, onSubmit }: Pro
         ))}
       </select>
 
-      <div className="flex gap-2 mb-2">
+      <div className="flex gap-2 mb-3 md:mb-6">
         <input
           type="number"
           placeholder="Hours"
           value={hours}
           onChange={e => setHours(e.target.value)}
           disabled={timeInputsDisabled}
-          className="no-spinner border rounded px-2 py-1 w-1/2 disabled:bg-gray-300 disabled:text-gray-500"
+          className="no-spinner border rounded px-2 py-1 md:py-2 w-1/2 disabled:bg-gray-300 disabled:text-gray-500"
         />
         <input
           type="number"
@@ -113,14 +113,14 @@ export default function TimeEntryForm({ categories, occupations, onSubmit }: Pro
           value={minutes}
           onChange={e => setMinutes(e.target.value)}
           disabled={timeInputsDisabled}
-          className="no-spinner border rounded px-2 py-1 w-1/2 disabled:bg-gray-300 disabled:text-gray-500"
+          className="no-spinner border rounded px-2 py-1 md:py-3 w-1/2 disabled:bg-gray-300 disabled:text-gray-500"
         />
       </div>
 
       <button
         onClick={handleSubmit}
         disabled={addEntryDisabled}
-        className="bg-green-500 text-white px-4 py-2 rounded disabled:bg-gray-300 disabled:text-gray-500"
+        className="bg-green-500 hover:bg-green-600 transition text-white px-4 py-2 rounded cursor-pointer disabled:bg-gray-300 disabled:text-gray-500"
       >
         Add Entry
       </button>

@@ -74,7 +74,7 @@ export default function Occupations({ categories, occupations, fetchOccupations 
         </select>
         <button
           onClick={handleAddOccupation}
-          className="bg-green-500 text-white px-4 py-2 rounded mt-2"
+          className="bg-green-500 hover:bg-green-600 cursor-pointer transition text-white px-4 py-2 rounded mt-2"
         >
           Add Occupation
         </button>

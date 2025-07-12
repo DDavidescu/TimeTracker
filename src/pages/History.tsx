@@ -61,7 +61,7 @@ return (
 {/* Header */}
 <header className="bg-white shadow-md">
   <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-    <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+    <h1 className="text-2xl md:text-3xl font-bold text-gray-800 transition duration-300 hover:text-blue-600 hover:scale-105">
       Time Entry History
     </h1>
     <BackButton onClick={() => navigate('/home')}>

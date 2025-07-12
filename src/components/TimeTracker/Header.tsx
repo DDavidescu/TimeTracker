@@ -26,7 +26,7 @@ export default function Header({
         ">
           Time Tracker
         </h1>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex justify-center items-center gap-1.5 md:gap-4.5">
           <button
             onClick={onEditClick}
             className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-3 md:px-7 md:py-3.5 cursor-pointer rounded-md text-md "

@@ -16,8 +16,8 @@ export default function ConfirmDialog({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl shadow-lg max-w-sm w-full p-6 space-y-4">
+    <div className="fixed inset-0 bg-black/80 md:bg-black/85 flex items-center justify-center z-50">
+      <div className="bg-white rounded-xl shadow-lg max-w-sm w-9/10 p-6 space-y-4">
         <h2 className="text-lg font-bold text-gray-800">{title}</h2>
         <p className="text-gray-700">{message}</p>
         <div className="flex justify-end space-x-3">
