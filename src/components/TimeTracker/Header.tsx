@@ -31,7 +31,7 @@ export default function Header({
             onClick={onEditClick}
             className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-3 md:px-7 md:py-3.5 cursor-pointer rounded-md text-md "
           >
-            Add Entry
+            Edit
           </button>
 
           <button
