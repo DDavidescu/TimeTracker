@@ -74,7 +74,7 @@ export default function TimeEntryForm({ categories, occupations, onSubmit }: Pro
       <select
         value={selectedCategory}
         onChange={e => setSelectedCategory(e.target.value)}
-        className="border rounded px-2 py-1 md:py-3 mb-3 md:mb-6 w-full"
+        className="border border-slate-400 rounded-md px-2 py-1 md:py-3 mb-3 md:mb-6 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
       >
         <option value="">Select Category</option>
         {categories.map(cat => (
@@ -87,7 +87,7 @@ export default function TimeEntryForm({ categories, occupations, onSubmit }: Pro
       <select
         value={selectedOccupation}
         onChange={e => setSelectedOccupation(e.target.value)}
-        className="border rounded px-2 py-1 md:py-3 mb-3 md:mb-6 w-full disabled:bg-gray-300 disabled:text-gray-500"
+        className="border border-slate-400 rounded-md px-2 py-1 md:py-3 mb-3 md:mb-6 w-full disabled:bg-gray-300 disabled:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         disabled={occupationDisabled}
       >
         <option value="">Select Occupation</option>
@@ -105,7 +105,7 @@ export default function TimeEntryForm({ categories, occupations, onSubmit }: Pro
           value={hours}
           onChange={e => setHours(e.target.value)}
           disabled={timeInputsDisabled}
-          className="no-spinner border rounded px-2 py-1 md:py-2 w-1/2 disabled:bg-gray-300 disabled:text-gray-500"
+          className="no-spinner border border-slate-400 rounded px-2 py-1 md:py-2 w-1/2 disabled:bg-gray-300 disabled:text-gray-500  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
         <input
           type="number"
@@ -113,7 +113,7 @@ export default function TimeEntryForm({ categories, occupations, onSubmit }: Pro
           value={minutes}
           onChange={e => setMinutes(e.target.value)}
           disabled={timeInputsDisabled}
-          className="no-spinner border rounded px-2 py-1 md:py-3 w-1/2 disabled:bg-gray-300 disabled:text-gray-500"
+          className="no-spinner border border-slate-400 rounded px-2 py-1 md:py-2 w-1/2 disabled:bg-gray-300 disabled:text-gray-500  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
       </div>
 

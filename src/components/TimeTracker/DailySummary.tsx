@@ -18,7 +18,7 @@ export default function DailySummary({ totalMinutes }: Props) {
         {hours}h {minutes}m / 8h target
       </p>
       {goalReached && (
-        <div className="mt-3 p-3 rounded-lg bg-green-50 border border-green-200 text-green-700">
+        <div className="mt-3 p-3 rounded-lg bg-green-50 border border-green-600 text-green-700">
           🎉 Great job! You've hit your 8h goal today!
         </div>
       )}
